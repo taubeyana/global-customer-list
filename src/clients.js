@@ -1,4 +1,4 @@
-{
+const clients = {
   "Customers": [
     {
       "Id": "ALFKI",
@@ -568,6 +568,18 @@
       "Fax": "(8) 34-93-93"
     },
     {
+      "Id": "T11I",
+      "CompanyName": "The Big Cheese",
+      "ContactName": "Liz Nixon",
+      "ContactTitle": "Marketing Manager",
+      "Address": "89 Jefferson Way Suite 2",
+      "City": "Portland",
+      "Region": "OR",
+      "PostalCode": "97201",
+      "Country": "USA",
+      "Phone": "(503) 555-3612"
+    },
+    {
       "Id": "LONEP",
       "CompanyName": "Lonesome Pine Restaurant",
       "ContactName": "Fran Wilson",
@@ -1103,3 +1115,5 @@
   ],
   "ResponseStatus": {}
 }
+
+export default clients;
