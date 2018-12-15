@@ -1,38 +1,46 @@
 import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
 import './ClientsList.css';
 import List from '../common/List/List';
-import { mapObjectByProp, sortByNum } from '../services';
+import { setCountry, setCity, getCounries, getCities, getCompanies, setCompany } from '../store/actions'
 
 class ClientsList extends Component {
     constructor(props) {
         super(props)
-        this.state = {
-            clients: this.props.data,
-            countries: [],
-            cities: [],
-            companies: [],
-            selectedCountry: 'USA',
-            selectedCity: 'Portland',
-            selectedCustomer: null
-        }
+        this.state = {}
     }
     componentDidMount() {
-        const sortedCountries = sortByNum(mapObjectByProp(this.state.clients,'Country', 'City'));
-        const cities  = mapObjectByProp(this.state.clients,'City', 'CompanyName', 'Country', this.state.selectedCountry)
-        const companiesByCity  = cities[this.state.selectedCity]
-        this.setState({countries: [...sortedCountries]})
-        this.setState({cities: [...sortByNum(cities)]})
-        this.setState({companies: [...companiesByCity].sort()})
+        this.props.dispatch(getCounries())
+        this.props.dispatch(getCities())
+        this.props.dispatch(getCompanies())
     }
+    handleListItemClick = (e) => {
+        this.props.dispatch(setCountry(e.target.textContent.trim()))
+        this.props.dispatch(getCities())
+        this.props.dispatch(getCompanies())
+    }
+    handleOnCityClick = (e) => {
+        this.props.dispatch(setCity(e.target.textContent.trim()))
+        this.props.dispatch(getCompanies())
+    }
+    handleOnCompanyClick = (e) => {
+        this.props.dispatch(setCompany(e.target.textContent.trim()))
+        // this.props.dispatch(getCompanies())
+    }
+    
     render() {
         return (
             <Fragment>
-                <List data = { this.state.countries } />
-                <List data = { this.state.cities } />
-                <List data = { this.state.companies } />
+                <List onClick = { this.handleListItemClick } data = { this.props.countries } />
+                <List onClick = { this.handleOnCityClick } data = { this.props.sortedCities } />
+                <List onClick = { this.handleOnCompanyClick } data = { this.props.companies } />
             </Fragment>
         )
     }
 }
-
-export default ClientsList
+const mapStateToProps = state => ({
+    countries: state.countries,
+    sortedCities: state.sortedCities,
+    companies: state.companies
+})
+export default connect(mapStateToProps)(ClientsList)
