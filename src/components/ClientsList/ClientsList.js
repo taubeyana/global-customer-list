@@ -1,8 +1,17 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import './ClientsList.css';
-import List from '../common/List/List';
-import { setCountry, setCity, getCounries, getCities, getCompanies, setCompany } from '../store/actions'
+import List from '../../common/List/List';
+import MapItem from '../Map/Map';
+import { 
+    setCountry,
+    setCity, 
+    getCounries, 
+    getCities, 
+    getCompanies, 
+    setCompany, 
+    getCompanyLocation
+} from '../../store/actions'
 
 class ClientsList extends Component {
     constructor(props) {
@@ -25,7 +34,7 @@ class ClientsList extends Component {
     }
     handleOnCompanyClick = (e) => {
         this.props.dispatch(setCompany(e.target.textContent.trim()))
-        // this.props.dispatch(getCompanies())
+        this.props.dispatch(getCompanyLocation())
     }
     
     render() {
@@ -34,6 +43,7 @@ class ClientsList extends Component {
                 <List onClick = { this.handleListItemClick } data = { this.props.countries } />
                 <List onClick = { this.handleOnCityClick } data = { this.props.sortedCities } />
                 <List onClick = { this.handleOnCompanyClick } data = { this.props.companies } />
+                <MapItem address = { this.props.selectedCompany } location = { this.props.selectedCompanyLocation } />
             </Fragment>
         )
     }
@@ -41,6 +51,8 @@ class ClientsList extends Component {
 const mapStateToProps = state => ({
     countries: state.countries,
     sortedCities: state.sortedCities,
-    companies: state.companies
+    companies: state.companies,
+    selectedCompany: state.selectedCompany,
+    selectedCompanyLocation: state.selectedCompanyLocation
 })
 export default connect(mapStateToProps)(ClientsList)

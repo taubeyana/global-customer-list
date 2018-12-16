@@ -1,3 +1,5 @@
+import { convertArrayToObject } from './services';
+
 const clients = {
   "Customers": [
     {
@@ -1116,4 +1118,41 @@ const clients = {
   "ResponseStatus": {}
 }
 
+export const clientsObject = convertArrayToObject(clients.Customers)
+// function mapObjectByProp(arr) {
+//   const countries = {}
+//   for (let customer of arr) {
+//       if (!countries.hasOwnProperty(customer.Country)) {
+//           countries[customer.Country] = {}
+//           countries[customer.Country]['cities'] = {}
+//           countries[customer.Country]['cities'][customer.City] = {}
+//           countries[customer.Country]['cities'][customer.City]['companies'] = {}
+//           countries[customer.Country]['cities'][customer.City]['companies'][customer.CompanyName]  = `${customer.Address} ${customer.City} ${customer.Country}`
+//       } else {
+//           if (!countries[customer.Country]['cities'].hasOwnProperty(customer.City)) {
+//               countries[customer.Country]['cities'][customer.City] = {}
+//               countries[customer.Country]['cities'][customer.City]['companies'] = {}
+//               countries[customer.Country]['cities'][customer.City]['companies'][customer.CompanyName] = `${customer.Address} ${customer.City} ${customer.Country}`
+//           } else {
+//               if (!countries[customer.Country]['cities'][customer.City].hasOwnProperty(customer.CompanyName)) {
+//                   countries[customer.Country]['cities'][customer.City]['companies'] = {}
+//                   countries[customer.Country]['cities'][customer.City]['companies'][customer.CompanyName] = `${customer.Address} ${customer.City} ${customer.Country}`
+//               }
+
+//           }
+//       }
+//   }
+//   return countries;
+// }
+
+
+
+
+
+
+
+
+
+
 export default clients;
+// console.log(mapObjectByProp(clients.Customers))

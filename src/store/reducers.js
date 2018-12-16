@@ -4,8 +4,10 @@ import {
     GET_CITIES,
     SET_COUNTRY,
     SET_COMPANY,
-    SET_CITY } 
-    from '../store/actions'
+    SET_COMPANY_LOCATION,
+    SET_CITY 
+} from '../store/actions';
+    
 
 const initialState = {
     countries: [],
@@ -14,7 +16,8 @@ const initialState = {
     sortedCities: [],
     selectedCountry: 'USA',
     selectedCity: 'Portland',
-    selectedCompany: null
+    selectedCompany: 'Lonesome Pine Restaurant',
+    selectedCompanyLocation:  {lat: 45.5020266, lng: -73.560358}
 }
 
 const rootReducer = (state = initialState, action) => {
@@ -45,6 +48,11 @@ const rootReducer = (state = initialState, action) => {
             return ({
                 ...state, 
                 selectedCompany: action.payload
+            })
+        case SET_COMPANY_LOCATION:
+            return ({
+                ...state, 
+                selectedCompanyLocation: action.payload
             })
         case SET_CITY:
             return ({

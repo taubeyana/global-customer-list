@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import clients from './clients';
-import ClientsList from './components/ClientsList';
+import ClientsList from './components/ClientsList/ClientsList';
 import { Provider } from 'react-redux';
 import configureStore from './store/configureStore';
 
