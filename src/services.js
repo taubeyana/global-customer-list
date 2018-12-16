@@ -1,7 +1,13 @@
+import Geocode from "react-geocode";
+import { store } from './App';
+import { setCompanyLocation } from './store/actions'
 
 // Reduce array to object by properties with appropriate condition
+
+
 export function mapObjectByProp(arr = [],key,value,conditionKey, conditionValue) {
     return arr.reduce((final, customer) => {
+        
         if (conditionKey) {
             if (customer[conditionKey] !== conditionValue) {
                 return final;
@@ -11,25 +17,95 @@ export function mapObjectByProp(arr = [],key,value,conditionKey, conditionValue)
             final[customer[key]] = []
         }
         if (!final[customer[key]].includes(customer[value])) {
-            final[customer[key]].push(customer[value])
+            final[customer[key]].push(customer[value],customer.Id)
         }
         return final
     },{})
 }
 
-export function sortByNum(obj) {
+export function convertArrayToObject(arr) {
+    const countries = {}
+    for (let customer of arr) {
+        if (!countries.hasOwnProperty(customer.Country)) {
+            countries[customer.Country] = {}
+            countries[customer.Country]['cities'] = {}
+            countries[customer.Country]['cities'][customer.City] = {}
+            countries[customer.Country]['cities'][customer.City]['companies'] = {}
+            countries[customer.Country]['cities'][customer.City]['companies'][customer.CompanyName]  = `${customer.Address} ${customer.City} ${customer.Country}`
+        } else {
+            if (!countries[customer.Country]['cities'].hasOwnProperty(customer.City)) {
+                countries[customer.Country]['cities'][customer.City] = {}
+                countries[customer.Country]['cities'][customer.City]['companies'] = {}
+                countries[customer.Country]['cities'][customer.City]['companies'][customer.CompanyName] = `${customer.Address} ${customer.City} ${customer.Country}`
+            } else { 
+                    countries[customer.Country]['cities'][customer.City]['companies'][customer.CompanyName] = `${customer.Address} ${customer.City} ${customer.Country}`
+                }
+
+
+        }
+    }
+    return countries;
+}
+
+// export function sortByNum(obj) {
+//     const sortableArr = []
+//     for (let key in obj) {
+//         let arr = []
+//         console.log(key[''])
+//     }
+//     // return sortableArr.sort((a,b) => b[1] - a[1]).map(i => i[0])
+// }
+// export function sortByNum(obj) {
+//     const sortableArr = []
+//     for (let key in obj) {
+//         let arr = []
+//         arr.push(key,obj[key].length)
+//         sortableArr.push(arr)
+//     }
+//     return sortableArr.sort((a,b) => b[1] - a[1]).map(i => i[0])
+// }
+
+export function sortByNum(obj,sortKey) {
     const sortableArr = []
     for (let key in obj) {
         let arr = []
-        arr.push(key,obj[key].length)
+        arr.push(key, Object.keys(obj[key][sortKey]).length)
         sortableArr.push(arr)
     }
     return sortableArr.sort((a,b) => b[1] - a[1]).map(i => i[0])
 }
-// export const sortedCountries  = sortByNum(mapObjectByProp(clients.Customers,'Country', 'City'))
-// export const sortedCities  = sortByNum(mapObjectByProp(clients.Customers,'City', 'CompanyName', 'Country','USA'))
-// export const companiesByCity  = mapObjectByProp(clients.Customers,'City','CompanyName','Country','USA')
 
-// console.log(sortedCountries)
-// console.log(sortedCities)
-// console.log(companiesByCity['Portland'].sort())
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+export function geoLocation(address) {
+    Geocode.setApiKey("AIzaSyDSFNqoNb2-zScnVQSaG-emwNPCeANWqyc");
+    Geocode.fromAddress(address)
+    .then(response => {
+        const { lat, lng } = response.results[0].geometry.location;
+        store.dispatch(setCompanyLocation(response.results[0].geometry.location)) ;
+        console.log(lat, lng);
+        // return location
+    },
+    error => {
+        console.error(error);
+    });
+}
