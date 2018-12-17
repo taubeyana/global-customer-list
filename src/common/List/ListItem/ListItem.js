@@ -1,5 +1,5 @@
 import React from 'react';
-import './ListItem.css';
+// import './ListItem.css';
 
 const ListItem = props => (
      <li onClick = { props.onClick }> { props.itemName } </li>

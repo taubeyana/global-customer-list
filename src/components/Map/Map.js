@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Map, GoogleApiWrapper, Marker, InfoWindow } from 'google-maps-react';
+import './Map.css'
 
 const mapStyle = {
-  height: '200px',
-  width: '200px'
+    height: '325px',
+    width: '500px',
 };
 
 export class MapItem extends Component {
@@ -31,6 +32,8 @@ export class MapItem extends Component {
 
   render() {
     return (
+      <div className='map-wrapper'>
+      <h3> Map </h3>
       <Map 
           google = { this.props.google }
           zoom = { 14 }
@@ -45,6 +48,7 @@ export class MapItem extends Component {
           <h3> { this.props.address } </h3>
         </InfoWindow>
       </Map>
+      </div>
     );
   }
 }

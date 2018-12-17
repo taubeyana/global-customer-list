@@ -1,9 +1,4 @@
-import Geocode from "react-geocode";
-import { store } from './App';
-import { setCompanyLocation } from './store/actions'
-
 // Reduce array to object by properties with appropriate condition
-
 
 export function mapObjectByProp(arr = [],key,value,conditionKey, conditionValue) {
     return arr.reduce((final, customer) => {
@@ -23,6 +18,8 @@ export function mapObjectByProp(arr = [],key,value,conditionKey, conditionValue)
     },{})
 }
 
+// Converting array of objects to one nested object with the needed information
+
 export function convertArrayToObject(arr) {
     const countries = {}
     for (let customer of arr) {
@@ -40,30 +37,11 @@ export function convertArrayToObject(arr) {
             } else { 
                     countries[customer.Country]['cities'][customer.City]['companies'][customer.CompanyName] = `${customer.Address} ${customer.City} ${customer.Country}`
                 }
-
-
         }
     }
     return countries;
 }
 
-// export function sortByNum(obj) {
-//     const sortableArr = []
-//     for (let key in obj) {
-//         let arr = []
-//         console.log(key[''])
-//     }
-//     // return sortableArr.sort((a,b) => b[1] - a[1]).map(i => i[0])
-// }
-// export function sortByNum(obj) {
-//     const sortableArr = []
-//     for (let key in obj) {
-//         let arr = []
-//         arr.push(key,obj[key].length)
-//         sortableArr.push(arr)
-//     }
-//     return sortableArr.sort((a,b) => b[1] - a[1]).map(i => i[0])
-// }
 
 export function sortByNum(obj,sortKey) {
     const sortableArr = []
@@ -75,37 +53,3 @@ export function sortByNum(obj,sortKey) {
     return sortableArr.sort((a,b) => b[1] - a[1]).map(i => i[0])
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-export function geoLocation(address) {
-    Geocode.setApiKey("AIzaSyDSFNqoNb2-zScnVQSaG-emwNPCeANWqyc");
-    Geocode.fromAddress(address)
-    .then(response => {
-        const { lat, lng } = response.results[0].geometry.location;
-        store.dispatch(setCompanyLocation(response.results[0].geometry.location)) ;
-        console.log(lat, lng);
-        // return location
-    },
-    error => {
-        console.error(error);
-    });
-}

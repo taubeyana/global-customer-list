@@ -11,11 +11,10 @@ import {
 
 const initialState = {
     countries: [],
-    cities: [],
     companies: [],
     sortedCities: [],
-    selectedCountry: 'USA',
-    selectedCity: 'Portland',
+    selectedCountry: null,
+    selectedCity: null,
     selectedCompany: 'Lonesome Pine Restaurant',
     selectedCompanyLocation:  {lat: 45.5020266, lng: -73.560358}
 }
@@ -30,14 +29,14 @@ const rootReducer = (state = initialState, action) => {
         case GET_CITIES:
             return ({
                 ...state, 
-                cities: action.payload,
                 sortedCities: action.sortedCities,
                 selectedCity: action.sortedCities[0]
             })
         case GET_COUNTRIES:
             return ({
                 ...state, 
-                countries: action.payload
+                countries: action.payload,
+                selectedCountry: action.selectedCountry
             })
         case GET_COMPANIES:
             return ({

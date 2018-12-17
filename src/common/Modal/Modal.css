@@ -1,0 +1,14 @@
+.modal {
+  position: fixed;
+  width: 55%;
+  height: 375px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.3);
+  background: white;
+  border-radius: 10px;
+  z-index: 500; 
+  overflow: hidden;
+}
+
