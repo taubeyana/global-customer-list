@@ -10,6 +10,7 @@ export const SET_COUNTRY = "SET_COUNTRY";
 export const SET_CITY = "SET_CITY";
 export const SET_COMPANY = "SET_COMPANY";
 export const SET_COMPANY_LOCATION = "SET_COMPANY_LOCATION";
+export const SET_COMPANY_ADDRESS = "SET_COMPANY_ADDRESS";
 
 export const setCountry = (payload) => ({
     type: SET_COUNTRY,
@@ -29,7 +30,7 @@ export const setCompany = (payload) => ({
 export const getCompanyLocation = () => {
     return dispatch => {
         Geocode.setApiKey("AIzaSyDSFNqoNb2-zScnVQSaG-emwNPCeANWqyc");
-        Geocode.fromAddress(store.getState().selectedCompany)
+        Geocode.fromAddress(store.getState().selectedCompanyAddress)
         .then(response => {
             dispatch(setCompanyLocation(response.results[0].geometry.location)) ;
         },
@@ -55,7 +56,8 @@ export const getCities = () => {
     const sortedCities = sortByNum(clientsObject[store.getState().selectedCountry]['cities'],'companies');
     return {
         type: GET_CITIES,
-        sortedCities: sortedCities
+        sortedCities: sortedCities,
+        selectedCity: sortedCities[0]
     }
 }
 
@@ -63,6 +65,13 @@ export const getCompanies = () => {
     const companiesByCity  = Object.keys(clientsObject[store.getState().selectedCountry]['cities'][store.getState().selectedCity]['companies']).sort()
     return {
         type: GET_COMPANIES,
-        payload: companiesByCity
+        payload: companiesByCity,
+    }
+}
+export const setCompanyAddress = () => {
+    const address  = clientsObject[store.getState().selectedCountry]['cities'][store.getState().selectedCity]['companies'][store.getState().selectedCompany]
+    return {
+        type: SET_COMPANY_ADDRESS,
+        payload: address
     }
 }
