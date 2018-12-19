@@ -21,14 +21,15 @@ class ClientsContainer extends Component {
         return (
             <Fragment>
                 <Modal className = "modal"
-                    modalOpen = { this.state.modalOpen }
-                    modalClose = { this.toggleModal }>
+                        modalOpen = { this.state.modalOpen }
+                        modalClose = { this.toggleModal }>
                     <div className = 'header-wrapper'></div>
                     <div className = 'clients-list-wrapper'>
                         <List className = 'countries' listType = 'Countries'/>
                         <List className = 'cities' listType = 'Cities'/>
                         <List className = 'companies' listType = 'Companies'/>
-                        <MapItem address = { this.props.selectedCompany } location = { this.props.selectedCompanyLocation } />
+                        <MapItem address = { this.props.selectedCompany } 
+                                location = { this.props.selectedCompanyLocation } />
                     </div>
                 </Modal>
                 <button onClick = { this.toggleModal }> Show Clients </button>

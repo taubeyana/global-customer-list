@@ -13,11 +13,7 @@ import {
     setCompanyAddress
 } from '../../store/actions';
 
-class List2 extends Component {
-    constructor(props) {
-        super(props)
-        
-    }
+class List extends Component {
     renderlist() {
         let itemActiveStyle = {
             background: '#007AFF',
@@ -26,13 +22,25 @@ class List2 extends Component {
         let items = []
         switch (this.props.listType) {
             case 'Countries':
-            items = this.props.countries.map( item => <li style = { item === this.props.selectedCountry ? itemActiveStyle: null }  key = { uniqid() } onClick = { e => this.onListItemClick(e) }> {item} </li> ) 
+            items = this.props.countries
+            .map( item => <li 
+                            style = { item === this.props.selectedCountry ? itemActiveStyle: null }  
+                            key = { uniqid() } 
+                            onClick = { e => this.onListItemClick(e) }> {item} </li> ) 
                 break;
             case 'Cities':
-            items = this.props.sortedCities.map( item => <li style = { item === this.props.selectedCity ? itemActiveStyle: null }  key = { uniqid() } onClick = { e => this.onListItemClick(e) }> {item} </li> ) 
+            items = this.props.sortedCities
+            .map( item => <li 
+                            style = { item === this.props.selectedCity ? itemActiveStyle: null }  
+                            key = { uniqid() } 
+                            onClick = { e => this.onListItemClick(e) }> {item} </li> ) 
                 break;
             case 'Companies':
-            items = this.props.companies.map( item => <li style = { item === this.props.selectedCompany ? itemActiveStyle: null }  key = { uniqid() } onClick = { e => this.onListItemClick(e) }> {item} </li> ) 
+            items = this.props.companies
+            .map( item => <li 
+                            style = { item === this.props.selectedCompany ? itemActiveStyle: null }  
+                            key = { uniqid() } 
+                            onClick = { e => this.onListItemClick(e) }> {item} </li> ) 
                 break;
             default:
                 items = [];
@@ -49,6 +57,7 @@ class List2 extends Component {
                 break;
             case 'Companies':
             this.props.dispatch(getCompanies())
+                break;
             default:
                 break;
         }
@@ -70,6 +79,7 @@ class List2 extends Component {
                 this.props.dispatch(setCompany(selectedItem))
                 this.props.dispatch(setCompanyAddress())
                 this.props.dispatch(getCompanyLocation())
+                break;
             default:
                 break;
         }
@@ -93,5 +103,5 @@ const mapStateToProps = state => ({
     companies: state.companies,
     selectedCompany: state.selectedCompany,
 })
-export default connect(mapStateToProps)(List2)
+export default connect(mapStateToProps)(List)
 
